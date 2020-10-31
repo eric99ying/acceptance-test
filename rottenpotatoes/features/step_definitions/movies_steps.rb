@@ -28,3 +28,21 @@ Then /the director of "(.*)" should be "(.*)"/ do |m, d|
   found = Movie.find_by(:title => m)
   expect(found.director).to eq(d)
 end
+
+Then /I should be on the Similar Movies page for "(.*)"/ do |m|
+  current_path = URI.parse(current_url).path
+  if current_path.respond_to? :should
+    current_path.should == similar_path(Movie.find_by_title(m))
+  else
+    assert_equal similar_path(Movie.find_by_title(m)), current_path
+  end
+end
+
+Then /I should be on the home page/ do
+  current_path = URI.parse(current_url).path
+  if current_path.respond_to? :should
+    current_path.should == movies_path
+  else
+    assert_equal movies_path, current_path
+  end
+end
