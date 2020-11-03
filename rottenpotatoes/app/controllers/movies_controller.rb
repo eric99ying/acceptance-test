@@ -9,7 +9,7 @@ class MoviesController < ApplicationController
   def similar
     id = params[:id]
     fmovie = Movie.find(id)
-    if fmovie.director != ""
+    if fmovie.director != "" and fmovie.director
       @movies = Movie.find_movies_same_director(fmovie.director)
     else
       flash[:message] = "'#{fmovie.title}' has no director info"
